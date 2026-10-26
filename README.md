@@ -1,7 +1,7 @@
 # CardioGuard AI
 
 Heart disease risk predictor - CSC701 Machine Learning mini project (Sem 7).
-Heart disease prediction built on Random Forest (Module 3 Ensemble) using the UCI Heart
+Heart disease prediction built on Random Forest (ensemble) using the UCI Heart
 Disease (Cleveland) set. Random Forest runs by default; 3 baselines (Logistic Regression,
 SVM, Decision Tree) are available under advanced compare, with preprocessing,
 confidence gauge and batch CSV scoring.
@@ -62,10 +62,10 @@ Models are pre-trained and committed under `backend/models/` so deploy works wit
 - `frontend/public/sample_patients.csv` - in-browser sample file
 - `research/HeartDiseaseResearch.ipynb` - training + EDA notebook
 
-## Syllabus mapping (CSC701, Modules 3-6)
-- Module 3 (Ensemble): Random Forest bagging, Decision Tree, model comparison
-- Module 4 (SVM): RBF kernel SVM, margin concept, scaling, LR comparison
-- Module 5 (Clustering): KNN imputation via Euclidean distance
-- Module 6 (Dim reduction): StandardScaler pipeline (PCA-ready)
+## Syllabus topics covered (CSC701)
+- Ensemble methods: Random Forest bagging, Decision Tree, model comparison
+- SVM and linear models: RBF kernel, margin concept, scaling, LR comparison
+- Distance metrics: KNN imputation via Euclidean distance
+- Scaling: StandardScaler pipeline (PCA-ready)
 
 Research demo only. Not a medical diagnosis.

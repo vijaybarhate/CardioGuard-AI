@@ -3,7 +3,6 @@ import { Cpu, GitBranch, Layers, Target } from 'lucide-react';
 
 const INFO = {
   'Logistic Regression': {
-    module: 'Module 4 - Baseline',
     short: 'Probabilistic linear classifier. Outputs probability via sigmoid.',
     how: 'Computes a weighted sum of features (z = w-x + b) and passes through sigmoid σ(z)=1/(1+e⁻ᶻ) to get P(y=1|x). Trained by minimizing log loss with gradient descent.',
     needs: 'Scaled features (distance/gradient based). Fast, interpretable; coefficients show feature importance direction.',
@@ -20,7 +19,6 @@ const INFO = {
     ),
   },
   'SVM': {
-    module: 'Module 4 - SVM',
     short: 'Maximum-margin hyperplane classifier. RBF kernel for non-linear data.',
     how: 'Finds the hyperplane w-x+b=0 that maximizes margin 2/||w|| to nearest points (support vectors). RBF kernel K(x,z)=exp(-γ||x-z||²) maps data to high-dim space (kernel trick) so non-linear boundaries become linear.',
     needs: 'Scaled features. C controls margin vs errors; γ controls RBF width. Only support vectors matter.',
@@ -41,7 +39,6 @@ const INFO = {
     ),
   },
   'Decision Tree': {
-    module: 'Module 3 - Base learner',
     short: 'Single tree: splits on Gini/entropy. Interpretable if-else rules.',
     how: 'Recursively splits data on the feature/threshold that best separates classes (max information gain / min Gini). Stops at max_depth or pure leaves. Prediction = majority class in the leaf.',
     needs: 'No scaling needed. Prone to overfitting; used as base learner in ensembles.',
@@ -67,7 +64,6 @@ const INFO = {
     ),
   },
   'Random Forest': {
-    module: 'Module 3 - Ensemble (Bagging)',
     short: 'Bagging of many decision trees with random feature subsets. Reduces variance.',
     how: 'Builds T trees on bootstrap samples (with replacement, ~63% unique), considering only √M (or M/3) random features per split. Final prediction = majority vote (classification) / mean (regression). OOB samples give free validation error.',
     needs: 'No scaling needed. Robust, gives feature importance, rarely overfits. Slower & less interpretable.',
@@ -102,7 +98,7 @@ export default function ModelInfo({ model }) {
   return (
     <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)' }}>
       <div className="card-title"><Cpu size={18} aria-hidden="true" /> {model} - how it works</div>
-      <div className="card-sub">{info.module} - {info.short}</div>
+      <div className="card-sub">{info.short}</div>
       <div style={{ marginBottom: '1rem' }}>{info.diagram}</div>
       <div className="content" style={{ maxWidth: 'none' }}>
         <h3 style={{ marginTop: 0 }}>Algorithm</h3>

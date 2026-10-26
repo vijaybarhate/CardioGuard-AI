@@ -99,6 +99,8 @@ a:hover { text-decoration: underline; }
   border: 1px solid rgba(20,184,166,0.3);
 }
 
+.header-actions { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+
 /* ============ Nav ============ */
 .nav {
   display: flex;
@@ -357,6 +359,10 @@ tbody tr:hover { background: var(--surface-2); }
 }
 .content .qa .q { font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
 .content .qa .a { color: var(--text-soft); font-size: 0.92rem; }
+.glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0.7rem; margin: 0; padding: 0; }
+.glossary > div { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.7rem 0.85rem; }
+.glossary dt { font-weight: 700; font-size: 0.85rem; color: var(--text); margin-bottom: 0.2rem; }
+.glossary dd { margin: 0; font-size: 0.82rem; color: var(--text-soft); }
 
 /* ============ Model cards ============ */
 .model-grid {

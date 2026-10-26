@@ -15,7 +15,7 @@ export default function Learn() {
         <p>
           We predict whether a patient has <strong>heart disease</strong> (binary: 0 = no, 1 = yes) from 11 clinical
           features. Dataset: <strong>UCI Heart Disease (Cleveland)</strong>, ~918 patients. This is a
-          <em> supervised classification</em> problem - Module 3/4 of CSC701.
+          <em> supervised classification</em> problem taught in CSC701.
         </p>
         <div className="callout">
           <strong>Why heart disease?</strong> Classic, small, clean, well-studied dataset. Easy to explain in viva
@@ -45,7 +45,7 @@ export default function Learn() {
           <li><strong>Map categoricals</strong> - Sex (M/F→1/0), ChestPainType, RestingECG, ExerciseAngina, ST_Slope → numbers using a saved mapping.</li>
           <li><strong>Handle zeros</strong> - Cholesterol/RestingBP = 0 treated as missing (NaN), because 0 is medically impossible.</li>
           <li><strong>Clip outliers</strong> - Age, BP, Cholesterol, MaxHR, Oldpeak clipped to biological limits (prevents garbage input from breaking the model).</li>
-          <li><strong>KNN Imputation</strong> - missing values filled using nearest neighbours (distance-based → Module 5 concept).</li>
+          <li><strong>KNN Imputation</strong> - missing values filled using nearest neighbours (distance-based).</li>
           <li><strong>StandardScaler</strong> - applied only for distance-based models (SVM, Logistic Regression). Tree models use raw values.</li>
         </ol>
         <div className="callout warn">
@@ -54,10 +54,10 @@ export default function Learn() {
         </div>
       </Section>
 
-      <Section icon={Cpu} title="3. Primary Model: Random Forest (Module 3 - Ensemble)">
+      <Section icon={Cpu} title="3. Main Model: Random Forest">
         <div className="model-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
           <div className="model-card">
-            <div className="mod">Module 4 - SVM</div>
+            <div className="mod">Max-margin classifier</div>
             <div className="name">Support Vector Machine</div>
             <div className="desc">
               Finds the maximum-margin hyperplane separating the two classes. Uses RBF kernel to handle
@@ -65,7 +65,7 @@ export default function Learn() {
             </div>
           </div>
           <div className="model-card" style={{ borderColor: 'var(--accent)' }}>
-            <div className="mod">Module 3 - Ensemble (PRIMARY - this project)</div>
+            <div className="mod">PRIMARY - used in this project</div>
             <div className="name">Random Forest</div>
             <div className="desc">
               Bagging of many decision trees with random feature subsets. Reduces variance, robust to overfitting.
@@ -74,7 +74,7 @@ export default function Learn() {
             </div>
           </div>
           <div className="model-card">
-            <div className="mod">Module 3 - Base learner</div>
+            <div className="mod">Tree model</div>
             <div className="name">Decision Tree</div>
             <div className="desc">
               Single tree, splits on Gini/entropy. Highly interpretable (if-else rules) but prone to overfitting.
@@ -82,11 +82,11 @@ export default function Learn() {
             </div>
           </div>
           <div className="model-card">
-            <div className="mod">Module 4 - Baseline</div>
+            <div className="mod">Linear baseline</div>
             <div className="name">Logistic Regression</div>
             <div className="desc">
               Probabilistic linear classifier (sigmoid). Outputs probability 0-1. Fast, interpretable baseline.
-              Compared with SVM in Module 4 (hinge vs log loss).
+              Compared with SVM (hinge loss vs log loss).
             </div>
           </div>
         </div>
@@ -122,15 +122,15 @@ export default function Learn() {
         </div>
       </Section>
 
-      <Section icon={Layers} title="5. Where syllabus modules map">
+      <Section icon={Layers} title="5. Which syllabus topics this covers">
         <ul>
-          <li><strong>Module 3 (Ensemble):</strong> Random Forest (bagging), Decision Tree, model comparison.</li>
-          <li><strong>Module 4 (SVM):</strong> SVM (RBF kernel), margin concept, scaling, LR comparison.</li>
-          <li><strong>Module 5 (Clustering):</strong> KNN imputation uses distance metrics (Euclidean).</li>
-          <li><strong>Module 6 (Dim Reduction):</strong> StandardScaler + (optional) PCA for visualization - can be added.</li>
+          <li><strong>Ensemble methods:</strong> Random Forest (bagging), Decision Tree, model comparison.</li>
+          <li><strong>SVM and linear models:</strong> RBF kernel, margin concept, scaling, LR comparison.</li>
+          <li><strong>Distance metrics:</strong> KNN imputation uses Euclidean distance.</li>
+          <li><strong>Scaling:</strong> StandardScaler pipeline, PCA-ready for visualization.</li>
         </ul>
         <div className="callout warn">
-          <strong>Optional upgrade:</strong> Add PCA (Module 6) to reduce 11 features → 2D for a scatter plot of
+          <strong>Optional upgrade:</strong> Add PCA to reduce 11 features → 2D for a scatter plot of
           patients. Easy 10-line addition using sklearn PCA.
         </div>
       </Section>

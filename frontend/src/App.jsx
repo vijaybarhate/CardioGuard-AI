@@ -71,7 +71,7 @@ export default function App() {
 
       {(tab === 'predict' || tab === 'batch') && (
         <section className="card" style={{ marginBottom: '1.25rem' }} aria-labelledby="model-select-heading">
-          <div className="card-title" id="model-select-heading">Model: Random Forest <span className="meta-pill" style={{ marginLeft: '0.4rem' }}>Module 3 - Ensemble (primary)</span></div>
+          <div className="card-title" id="model-select-heading">Model: Random Forest</div>
           <div className="card-sub">This project is built on <strong>Random Forest</strong> (bagging ensemble). It runs by default. Other models are only for baseline comparison.</div>
           <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }} role="group" aria-label="Model selection">
             <button className={`btn ${model === 'Random Forest' ? 'btn-primary' : 'btn-ghost'}`} aria-pressed={model === 'Random Forest'}
@@ -95,7 +95,7 @@ export default function App() {
               ))}
             </div>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-mute)', marginTop: '0.6rem' }}>
-              Baselines: LR (Module 4 baseline), SVM (Module 4), Decision Tree (RF ka base learner). Same patient pe chalake confidence compare karo.
+              Baselines: Logistic Regression, SVM, Decision Tree (the base learner inside RF). Same patient pe chalake confidence compare karo.
             </p>
           </details>
           {tab === 'predict' && <ModelInfo model={model} />}
@@ -113,7 +113,6 @@ export default function App() {
 
       <footer style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--text-mute)', fontSize: '0.78rem' }}>
         CardioGuard AI - Built for CSC701 Machine Learning (Sem 7) - Not a medical diagnosis.
-        <br />UI patterns inspired by 21st.dev dashboard kits, rebuilt with pure CSS + lucide + SVG.
       </footer>
     </div>
   );

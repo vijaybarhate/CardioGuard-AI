@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Activity, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Activity, AlertCircle, CheckCircle2, Loader2, Dices } from 'lucide-react';
 import RiskGauge from './RiskGauge';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
@@ -20,6 +20,23 @@ const FIELDS = [
 ];
 
 const NUMERIC_FIELDS = ['Age', 'RestingBP', 'Cholesterol', 'FastingBS', 'MaxHR', 'Oldpeak'];
+
+const FEATURE_INFO = [
+  ['Age', 'Patient age in years. Risk generally rises with age.'],
+  ['Sex', 'M is male, F is female. The model encodes it as 1/0.'],
+  ['ChestPainType', 'Type of chest pain. TA is typical angina, ATA atypical angina, NAP non-anginal pain, ASY means no symptoms on exertion (carries higher risk).'],
+  ['RestingBP', 'Resting blood pressure in mm Hg. Around 120 is normal.'],
+  ['Cholesterol', 'Serum cholesterol in mg/dl. Higher values push risk up.'],
+  ['FastingBS', 'Fasting blood sugar above 120 mg/dl. 1 means yes (diabetic range), 0 means no.'],
+  ['RestingECG', 'Resting ECG result. Normal, ST for ST-T wave abnormality, LVH for thickened heart wall.'],
+  ['MaxHR', 'Maximum heart rate reached during exercise. An unusually low max can signal trouble.'],
+  ['ExerciseAngina', 'Chest pain during exercise. Y means yes, N means no.'],
+  ['Oldpeak', 'ST depression during exercise in mm. Higher means worse.'],
+  ['ST_Slope', 'Slope of the ST segment at peak exercise. Up is healthy, Flat is borderline, Down is worrisome.'],
+];
+
+const RI = (a, b) => Math.floor(a + Math.random() * (b - a + 1));
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const normalizeDetail = (detail) => {
   if (Array.isArray(detail)) return detail.map(d => d?.msg || JSON.stringify(d)).join(' ');
@@ -42,8 +59,28 @@ const PredictionForm = ({ selectedModel }) => {
     setError(null);
   }, [selectedModel]);
 
+  const fillRandom = () => {
+    setFormData({
+      Age: RI(28, 78),
+      Sex: pick(['M', 'F']),
+      ChestPainType: pick(['ATA', 'NAP', 'ASY', 'TA']),
+      RestingBP: RI(94, 200),
+      Cholesterol: RI(126, 400),
+      FastingBS: pick([0, 1]),
+      RestingECG: pick(['Normal', 'ST', 'LVH']),
+      MaxHR: RI(90, 200),
+      ExerciseAngina: pick(['N', 'Y']),
+      Oldpeak: Math.round(Math.random() * 40) / 10,
+      ST_Slope: pick(['Up', 'Flat', 'Down']),
+    });
+    setResult(null);
+    setError(null);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setResult(null);
+    setError(null);
     setFormData(prev => ({
       ...prev,
       [name]: NUMERIC_FIELDS.includes(name)
@@ -80,8 +117,17 @@ const PredictionForm = ({ selectedModel }) => {
   return (
     <div>
       <div className="card">
-        <div className="card-title"><Activity size={18} aria-hidden="true" /> Single Patient Assessment</div>
-        <div className="card-sub">Enter the 11 clinical features. The active model returns a risk label + confidence.</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.8rem' }}>
+          <div>
+            <div className="card-title"><Activity size={18} aria-hidden="true" /> Single Patient Assessment</div>
+            <div className="card-sub">Enter the 11 clinical features. The active model returns a risk label + confidence.</div>
+          </div>
+          <button type="button" className="btn btn-ghost" onClick={fillRandom}
+            title="Fill the form with random realistic values"
+            style={{ padding: '0.45rem 0.8rem', fontSize: '0.82rem', minHeight: 38, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <Dices size={15} aria-hidden="true" /> Random patient
+          </button>
+        </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.1rem' }} aria-live="polite">
           <span className="meta-pill">Active model: <strong>{selectedModel}</strong></span>
         </div>
@@ -153,19 +199,11 @@ const PredictionForm = ({ selectedModel }) => {
       <div className="card">
         <div className="card-title">What these 11 features mean</div>
         <div className="card-sub">Quick reference for viva / explanation.</div>
-        <ul style={{ color: 'var(--text-soft)', fontSize: '0.9rem', paddingLeft: '1.2rem' }}>
-          <li><strong>Age</strong> - patient age in years.</li>
-          <li><strong>Sex</strong> - M/F (encoded 1/0).</li>
-          <li><strong>ChestPainType</strong> - TA (typical), ATA (atypical), NAP (non-anginal), ASY (asymptomatic - high risk).</li>
-          <li><strong>RestingBP</strong> - resting blood pressure (mm Hg).</li>
-          <li><strong>Cholesterol</strong> - serum cholesterol (mg/dl).</li>
-          <li><strong>FastingBS</strong> - fasting blood sugar &gt; 120 mg/dl (1 = yes).</li>
-          <li><strong>RestingECG</strong> - Normal / ST-T abnormality / LVH.</li>
-          <li><strong>MaxHR</strong> - maximum heart rate achieved.</li>
-          <li><strong>ExerciseAngina</strong> - chest pain during exercise (Y/N).</li>
-          <li><strong>Oldpeak</strong> - ST depression induced by exercise (mm).</li>
-          <li><strong>ST_Slope</strong> - slope of peak exercise ST segment (Up/Flat/Down).</li>
-        </ul>
+        <dl className="glossary">
+          {FEATURE_INFO.map(([name, desc]) => (
+            <div key={name}><dt>{name}</dt><dd>{desc}</dd></div>
+          ))}
+        </dl>
       </div>
     </div>
   );

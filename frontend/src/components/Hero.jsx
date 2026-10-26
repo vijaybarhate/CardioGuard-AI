@@ -6,7 +6,7 @@ const STATS = [
     icon: Cpu,
     label: 'Primary model',
     value: 'RF',
-    sub: 'Random Forest (Module 3) + 3 baselines',
+    sub: 'Random Forest default, 3 more to compare',
     spark: [12, 22, 18, 30, 26, 38, 34, 46],
   },
   {
@@ -84,8 +84,8 @@ export default function Hero({ onPredict, onBatch, onLearn }) {
           Heart disease risk, <span className="hero-accent">explained by 4 models.</span>
         </h2>
         <p className="hero-sub">
-          Heart disease prediction built on Random Forest (Module 3 Ensemble). Single UI with
-          preprocessing, confidence gauge and batch CSV scoring, plus 3 baselines to compare.
+          Heart disease prediction built on Random Forest. One UI with preprocessing,
+          confidence gauge and batch CSV scoring, plus 3 extra models to compare.
         </p>
         <div className="hero-cta">
           <button className="btn btn-primary" onClick={onPredict}>
@@ -99,7 +99,7 @@ export default function Hero({ onPredict, onBatch, onLearn }) {
           </button>
         </div>
         <div className="hero-meta">
-          <span className="meta-pill">UCI Cleveland - 918 rows</span>
+          <span className="meta-pill">UCI Heart dataset - 918 patients</span>
           <span className="meta-pill">FastAPI + scikit-learn</span>
           <span className="meta-pill">React + Vite</span>
           <span className="meta-pill">Render + Vercel ready</span>

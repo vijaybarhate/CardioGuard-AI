@@ -9,7 +9,7 @@ export default function About() {
         <h2>CardioGuard AI</h2>
         <p>
           A full-stack machine learning web app that predicts heart-disease risk from 11 clinical features,
-          built on Random Forest (Module 3 Ensemble), with 3 baselines
+          built on Random Forest (ensemble), with 3 extra models
           (Logistic Regression, SVM, Decision Tree) for comparison.
           Built as the <strong>CSC701 Machine Learning mini project</strong> (Semester 7, 4th year).
         </p>
@@ -18,7 +18,7 @@ export default function About() {
         <ul>
           <li><strong>Backend:</strong> FastAPI + scikit-learn + joblib + pandas (Python 3.12)</li>
           <li><strong>Frontend:</strong> React 19 + Vite + Axios</li>
-          <li><strong>Primary model:</strong> Random Forest (Module 3) - default in UI</li>
+          <li><strong>Primary model:</strong> Random Forest (ensemble) - default in UI</li>
           <li><strong>Baselines:</strong> LR, SVM, DT (advanced compare) + scaler + KNN imputer + mappings (.joblib)</li>
           <li><strong>Dataset:</strong> UCI Heart Disease (Cleveland)</li>
         </ul>
