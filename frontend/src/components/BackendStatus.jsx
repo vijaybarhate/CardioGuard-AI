@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Wifi, WifiOff, Loader2 } from 'lucide-react';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
@@ -6,43 +6,63 @@ const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replac
 export default function BackendStatus() {
   const [state, setState] = useState('checking');
   const [latency, setLatency] = useState(null);
+  const alive = useRef(true);
+  const timer = useRef(null);
+
+  const check = useCallback(async (retries = 2) => {
+    const t0 = performance.now();
+    try {
+      const ctrl = new AbortController();
+      const killer = setTimeout(() => ctrl.abort(), 60000);
+      const res = await fetch(`${API_URL}/health`, { signal: ctrl.signal });
+      clearTimeout(killer);
+      const ms = Math.round(performance.now() - t0);
+      if (!alive.current) return;
+      if (res.ok) {
+        setState('online');
+        setLatency(ms);
+      } else {
+        throw new Error(`status ${res.status}`);
+      }
+    } catch (e) {
+      if (!alive.current) return;
+      if (retries > 0) {
+        timer.current = setTimeout(() => { if (alive.current) check(retries - 1); }, 6000);
+        return;
+      }
+      setState('offline');
+      setLatency(null);
+    }
+    if (alive.current) {
+      timer.current = setTimeout(() => { if (alive.current) check(2); }, 30000);
+    }
+  }, []);
 
   useEffect(() => {
-    let alive = true;
-    const check = async () => {
-      const t0 = performance.now();
-      try {
-        const res = await fetch(`${API_URL}/health`, { method: 'GET' });
-        const ms = Math.round(performance.now() - t0);
-        if (!alive) return;
-        if (res.ok) {
-          setState('online');
-          setLatency(ms);
-        } else {
-          setState('degraded');
-          setLatency(ms);
-        }
-      } catch (e) {
-        if (!alive) return;
-        setState('offline');
-        setLatency(null);
-      }
-    };
+    alive.current = true;
     check();
-    const id = setInterval(check, 30000);
-    return () => { alive = false; clearInterval(id); };
-  }, []);
+    return () => { alive.current = false; clearTimeout(timer.current); };
+  }, [check]);
+
+  const retryNow = () => {
+    clearTimeout(timer.current);
+    setState('checking');
+    check();
+  };
 
   const dotClass = state === 'online' ? 'dot-live' : state === 'checking' ? 'dot-checking' : 'dot-down';
 
   return (
-    <span className="status-pill" role="status" aria-live="polite"
-      title={state === 'online' ? `Backend online${latency != null ? ` - ${latency}ms` : ''}` : state === 'checking' ? 'Checking backend' : 'Backend unreachable - start uvicorn or wait for Render cold start'}>
+    <button type="button" className="status-pill" role="status" aria-live="polite" onClick={retryNow}
+      title={state === 'online'
+        ? `Backend online${latency != null ? ` - ${latency}ms` : ''}. Click to re-check.`
+        : 'Backend unreachable (Render free tier sleeps when idle - first wake takes ~40s). Click to retry now.'}
+      style={{ cursor: 'pointer', fontFamily: 'inherit' }}>
       <span className={`status-dot ${dotClass}`} aria-hidden="true" />
       {state === 'online' && <Wifi size={12} aria-hidden="true" />}
       {state === 'offline' && <WifiOff size={12} aria-hidden="true" />}
       {state === 'checking' && <Loader2 size={12} className="animate-spin" aria-hidden="true" />}
-      <span>{state === 'online' ? `API online${latency != null ? ` - ${latency}ms` : ''}` : state === 'checking' ? 'Connecting API' : 'API offline'}</span>
-    </span>
+      <span>{state === 'online' ? `API online${latency != null ? ` - ${latency}ms` : ''}` : state === 'checking' ? 'Connecting API' : 'API offline - click to retry'}</span>
+    </button>
   );
 }
