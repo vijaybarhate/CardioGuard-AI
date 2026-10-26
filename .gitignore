@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# Data and Models (backend/models must stay tracked for Render deploy)
+*.csv
+!sample_patients.csv
+!backend/sample_patients.csv
+!frontend/public/sample_patients.csv
+
+# Frontend
+node_modules/
+dist/
+build/
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
