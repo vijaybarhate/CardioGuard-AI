@@ -52,7 +52,7 @@ const BatchUpload = ({ selectedModel }) => {
       const blob = await res.blob();
       const f = new File([blob], 'sample_patients.csv', { type: 'text/csv' });
       setFile(f);
-    } catch (e) {
+    } catch {
       setError('Could not load sample file.');
     } finally { setLoading(false); }
   };
@@ -131,9 +131,9 @@ const BatchUpload = ({ selectedModel }) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
             <strong style={{ fontSize: '0.9rem' }}>Sample CSV (try it)</strong>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <a className="btn btn-ghost" style={{ padding: '0.4rem 0.8rem', minHeight: 36, fontSize: '0.82rem' }}
+              <a className="btn btn-ghost" style={{ padding: '0.4rem 0.8rem', minHeight: 44, fontSize: '0.82rem' }}
                 href="/sample_patients.csv" download="sample_patients.csv">Download</a>
-              <button className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', minHeight: 36, fontSize: '0.82rem' }}
+              <button className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', minHeight: 44, fontSize: '0.82rem' }}
                 onClick={loadSample} disabled={loading}>Use sample</button>
             </div>
           </div>
@@ -241,8 +241,8 @@ const BatchUpload = ({ selectedModel }) => {
           </div>
         )}
         {error && (
-          <div className="result-card" style={{ borderColor: 'var(--danger)', color: 'var(--danger)', marginTop: '1rem' }} role="alert" aria-live="assertive">
-            <p>{error}</p>
+          <div className="result-card" style={{ borderColor: 'var(--danger)', color: 'var(--danger-soft)', marginTop: '1rem' }} role="alert" aria-live="assertive">
+            <p style={{ color: "var(--danger-soft)" }}>{error}</p>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cpu, GitBranch, Layers, Target } from 'lucide-react';
+import { Cpu } from 'lucide-react';
 
 const INFO = {
   'Logistic Regression': {

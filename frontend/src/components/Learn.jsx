@@ -55,7 +55,7 @@ export default function Learn() {
       </Section>
 
       <Section icon={Cpu} title="3. Main Model: Random Forest">
-        <div className="model-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+        <div className="model-grid">
           <div className="model-card">
             <div className="mod">Max-margin classifier</div>
             <div className="name">Support Vector Machine</div>

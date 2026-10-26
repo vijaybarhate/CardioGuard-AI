@@ -13,6 +13,7 @@
   --accent-2: #22d3ee;
   --warn: #f59e0b;
   --danger: #f43f5e;
+  --danger-soft: #fda4af;
   --success: #22c55e;
   --info: #60a5fa;
   --radius: 12px;
@@ -124,13 +125,13 @@ a:hover { text-decoration: underline; }
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
   font-family: inherit;
-  min-height: 40px;
+  min-height: 44px;
 }
 .nav button:hover { color: var(--text); background: var(--surface-2); }
 .nav button.active { background: var(--accent); color: #042f2e; font-weight: 600; }
 
 /* ============ Focus ============ */
-:focus { outline: none; }
+:focus:not(:focus-visible) { outline: none; }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -189,7 +190,7 @@ input, select {
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
   font-family: inherit;
-  min-height: 40px;
+  min-height: 44px;
 }
 input:focus, select:focus {
   border-color: var(--accent);
@@ -386,7 +387,7 @@ tbody tr:hover { background: var(--surface-2); }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 .anim { animation: fadeIn 0.4s ease forwards; }
-@keyframes fadeIn { from { opacity: 1; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   .anim { animation: none; }
@@ -404,6 +405,17 @@ tbody tr:hover { background: var(--surface-2); }
 }
 
 /* ============ Status pill (21st style live badge) ============ */
+.status-pill-btn {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0;
+  cursor: pointer;
+}
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -468,22 +480,6 @@ tbody tr:hover { background: var(--surface-2); }
   max-width: 760px;
   margin: 0 auto;
 }
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: rgba(20,184,166,0.1);
-  border: 1px solid rgba(20,184,166,0.28);
-  border-radius: 999px;
-  padding: 0.35rem 0.85rem;
-  margin-bottom: 1rem;
-}
-.eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 .hero-title {
   font-family: 'Bricolage Grotesque', sans-serif;
   font-size: clamp(1.7rem, 4vw, 2.6rem);
@@ -547,7 +543,6 @@ tbody tr:hover { background: var(--surface-2); }
   margin-bottom: 0.2rem;
 }
 .stat-sub { font-size: 0.76rem; color: var(--text-mute); margin-bottom: 0.6rem; min-height: 2.2em; }
-.stat-spark { opacity: 0.9; }
 
 /* ============ Steps row ============ */
 .steps-row {
@@ -669,7 +664,7 @@ tbody tr:hover { background: var(--surface-2); }
   border: 1px solid var(--border-strong);
   color: var(--text-mute);
   border-radius: 7px;
-  width: 30px; height: 30px;
+  width: 40px; height: 40px;
   display: grid; place-items: center;
   cursor: pointer;
 }

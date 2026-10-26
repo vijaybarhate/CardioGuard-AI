@@ -23,3 +23,7 @@ build/
 .vscode/
 .idea/
 *.swp
+
+# Local skill installs
+.agents/
+skills-lock.json

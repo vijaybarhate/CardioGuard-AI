@@ -124,7 +124,7 @@ const PredictionForm = ({ selectedModel }) => {
           </div>
           <button type="button" className="btn btn-ghost" onClick={fillRandom}
             title="Fill the form with random realistic values"
-            style={{ padding: '0.45rem 0.8rem', fontSize: '0.82rem', minHeight: 38, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            style={{ padding: '0.45rem 0.8rem', fontSize: '0.82rem', minHeight: 44, flexShrink: 0, whiteSpace: 'nowrap' }}>
             <Dices size={15} aria-hidden="true" /> Random patient
           </button>
         </div>
@@ -164,7 +164,7 @@ const PredictionForm = ({ selectedModel }) => {
         {error && (
           <div className="result-card" style={{ borderColor: 'var(--danger)' }} role="alert" aria-live="assertive">
             <AlertCircle size={32} color="var(--danger)" style={{ marginBottom: '0.5rem' }} aria-hidden="true" />
-            <p style={{ color: 'var(--danger)' }}>{error}</p>
+            <p style={{ color: "var(--danger-soft)" }}>{error}</p>
           </div>
         )}
 
@@ -190,7 +190,7 @@ const PredictionForm = ({ selectedModel }) => {
             <div className="callout" style={{ textAlign: 'left', marginTop: '1rem' }}>
               <strong>How to read:</strong> High risk means the model thinks this patient profile resembles
               heart-disease cases in the training data. Confidence is the probability of the positive class.
-              This is a research demo, not a medical diagnosis.
+              This is a research demo, not a medical diagnosis.{result.prediction === 1 && ' If it shows High risk, consider discussing the result with a clinician.'}
             </div>
           </div>
         )}

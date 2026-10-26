@@ -43,7 +43,7 @@ export default function About() {
           <li><code>backend/train_model.py</code> - training script (re-train if needed)</li>
           <li><code>backend/models/*.joblib</code> - saved models + preprocessors</li>
           <li><code>backend/sample_patients.csv</code> - sample batch input</li>
-          <li><code>frontend/src/</code> - React components (PredictionForm, BatchUpload, Learn, Viva, About)</li>
+          <li><code>frontend/src/</code> - React components (PredictionForm, BatchUpload, Learn, About)</li>
           <li><code>research/HeartDiseaseResearch.ipynb</code> - training + EDA notebook (80 cells)</li>
         </ul>
 

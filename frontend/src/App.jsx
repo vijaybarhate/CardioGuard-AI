@@ -71,7 +71,7 @@ export default function App() {
 
       {(tab === 'predict' || tab === 'batch') && (
         <section className="card" style={{ marginBottom: '1.25rem' }} aria-labelledby="model-select-heading">
-          <div className="card-title" id="model-select-heading">Model: Random Forest</div>
+          <div className="card-title" id="model-select-heading">Model: {model}</div>
           <div className="card-sub">This project is built on <strong>Random Forest</strong> (bagging ensemble). It runs by default. Other models are only for baseline comparison.</div>
           <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }} role="group" aria-label="Model selection">
             <button className={`btn ${model === 'Random Forest' ? 'btn-primary' : 'btn-ghost'}`} aria-pressed={model === 'Random Forest'}
@@ -103,12 +103,14 @@ export default function App() {
       )}
 
       <main id="main">
+        <section id={`panel-${tab}`} role="tabpanel" aria-label={`${tab} panel`}>
         <ErrorBoundary>
           {tab === 'predict' && <PredictionForm selectedModel={model} />}
           {tab === 'batch' && <BatchUpload selectedModel={model} />}
           {tab === 'learn' && <Learn />}
           {tab === 'about' && <About />}
         </ErrorBoundary>
+        </section>
       </main>
 
       <footer style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--text-mute)', fontSize: '0.78rem' }}>

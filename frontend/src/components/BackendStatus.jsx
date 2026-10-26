@@ -24,7 +24,7 @@ export default function BackendStatus() {
       } else {
         throw new Error(`status ${res.status}`);
       }
-    } catch (e) {
+    } catch {
       if (!alive.current) return;
       if (retries > 0) {
         timer.current = setTimeout(() => { if (alive.current) check(retries - 1); }, 6000);
@@ -51,18 +51,19 @@ export default function BackendStatus() {
   };
 
   const dotClass = state === 'online' ? 'dot-live' : state === 'checking' ? 'dot-checking' : 'dot-down';
+  const label = state === 'online'
+    ? `Backend online${latency != null ? ` - ${latency}ms` : ''}. Click to re-check.`
+    : 'Backend unreachable (Render free tier sleeps when idle - first wake takes ~40s). Click to retry now.';
 
   return (
-    <button type="button" className="status-pill" role="status" aria-live="polite" onClick={retryNow}
-      title={state === 'online'
-        ? `Backend online${latency != null ? ` - ${latency}ms` : ''}. Click to re-check.`
-        : 'Backend unreachable (Render free tier sleeps when idle - first wake takes ~40s). Click to retry now.'}
-      style={{ cursor: 'pointer', fontFamily: 'inherit' }}>
-      <span className={`status-dot ${dotClass}`} aria-hidden="true" />
-      {state === 'online' && <Wifi size={12} aria-hidden="true" />}
-      {state === 'offline' && <WifiOff size={12} aria-hidden="true" />}
-      {state === 'checking' && <Loader2 size={12} className="animate-spin" aria-hidden="true" />}
-      <span>{state === 'online' ? `API online${latency != null ? ` - ${latency}ms` : ''}` : state === 'checking' ? 'Connecting API' : 'API offline - click to retry'}</span>
-    </button>
+    <span className="status-pill" role="status" aria-live="polite" title={label}>
+      <button type="button" className="status-pill-btn" onClick={retryNow} aria-label={label}>
+        <span className={`status-dot ${dotClass}`} aria-hidden="true" />
+        {state === 'online' && <Wifi size={12} aria-hidden="true" />}
+        {state === 'offline' && <WifiOff size={12} aria-hidden="true" />}
+        {state === 'checking' && <Loader2 size={12} className="animate-spin" aria-hidden="true" />}
+        <span>{state === 'online' ? `API online${latency != null ? ` - ${latency}ms` : ''}` : state === 'checking' ? 'Connecting API' : 'API offline - click to retry'}</span>
+      </button>
+    </span>
   );
 }
